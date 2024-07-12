@@ -1,13 +1,13 @@
 package Ejercicios.contorllers;
 
-import java.util.List;
+import java.util.*;
 
 import Ejercicios.models.Celda;
 
 /*
  * Un jugador está en la esquina superior izquierda (0,0) de un tablero m x n. En el tablero hay celdas
  * transitables (true) y no transitables (false). Encuentra un camino válido para ir a la esquina
- * inferior izquierda con el jugador, sabiendo que solo se puede mover hacia abajo y hacia la derecha.
+ * inferior derecha con el jugador, sabiendo que solo se puede mover hacia abajo y hacia la derecha.
  *
  * Ejemplo 1:
  *  Input:
@@ -21,6 +21,10 @@ import Ejercicios.models.Celda;
  *  Output: [(0,0), (0,1), (0,2), (0,3), (1,3), (2,3), (3,3)]
  *
  * Ejemplo 2:
+ *  Celda(0,3)
+ *  if (cache.containsKey(point)) {
+            return cache.get(point);
+}
  *  Input:
  *    [
  *      [true,true,true,true]
@@ -35,6 +39,61 @@ import Ejercicios.models.Celda;
 public class Laberinto {
 
     public List<Celda> getPath(boolean[][] grid) {
-        throw new UnsupportedOperationException("No implementado aún");
+        List<Celda> path = new ArrayList<>();
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return path;
+        }
+
+        // Map para almacenar si ya visitamos una celda y si es parte del camino
+        Map<Celda, Boolean> cache = new HashMap<>();
+        if (getPath(grid, 0, 0, path, cache)) {
+            return path;
+        }
+        return new ArrayList<>();
+    }
+
+    ///
+
+    ////
+
+    ////
+
+    //
+
+    ////
+
+    ////
+
+    //
+
+    ////
+
+    ////
+
+    private boolean getPath(boolean[][] grid, int row, int col,
+            List<Celda> path, Map<Celda, Boolean> cache) {
+        // Caso base: Si estamos fuera de los límites o la celda no es transitable,
+        // devolvemos false
+        if (row >= grid.length || col >= grid[0].length || !grid[row][col]) {
+            return false;
+        }
+        Celda point = new Celda(row, col);
+        // Parte de caching: Si ya visitamos esta celda, devolvemos su valor en cache
+        if (cache.containsKey(point)) {
+            return cache.get(point);
+        }
+        // Caso base: Si estamos en la celda de destino
+        boolean isAtEnd = (row == grid.length - 1 && col == grid[0].length - 1);
+        boolean success = false;
+        // Parte recursiva: Intentamos movernos hacia abajo o hacia la derecha
+        if (isAtEnd ||
+                getPath(grid, row + 1, col, path, cache) ||
+                getPath(grid, row, col + 1, path, cache)) {
+            path.add(point);
+            success = true;
+        }
+        // Parte de caching: Guardamos el resultado en cache
+        cache.put(point, success);
+        return success;
     }
 }

@@ -1,6 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import Ejercicios.contorllers.Laberinto;
+
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Programación Dinámica");
@@ -10,6 +12,7 @@ public class App {
         System.out.println(fibonacci(40));
         endtime = System.nanoTime();
         System.out.println("Time taken: " + (endtime - startime) + " ns");
+        System.out.println("Time taken: " + (endtime - startime) / 1_000_000_000.0 + " seconds");
 
         startime = System.nanoTime();
         System.out.println(fibonacciWithCaching(40));
@@ -22,7 +25,7 @@ public class App {
         System.out.println("Time taken: " + (endtime - startime) + " ns");
 
         /// Ejericio 1
-        // runEjercicio();
+        runEjercicio();
 
     }
 
@@ -79,13 +82,24 @@ public class App {
     }
 
     public static void runEjercicio() {
+        Laberinto laberinto = new Laberinto();
 
-        // boolean[][] grid = {
-        // { true, true, true, true },
-        // { false, false, false, true },
-        // { true, true, false, true },
-        // { true, true, false, true }
-        // };
+        boolean[][] grid1 = {
+                { true, true, true, true },
+                { false, false, false, true },
+                { true, true, false, true },
+                { true, true, false, true }
+        };
+
+        boolean[][] grid2 = {
+                { true, true, true, true },
+                { false, true, true, true },
+                { true, false, false, false },
+                { true, true, true, true }
+        };
+
+        System.out.println("Camino en el primer grid: " + laberinto.getPath(grid1));
+        System.out.println("Camino en el segundo grid: " + laberinto.getPath(grid2));
 
     }
 }
